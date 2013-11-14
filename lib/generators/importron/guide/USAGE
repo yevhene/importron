@@ -1,0 +1,2 @@
+Description:
+  Guide generator. `importron:guide $name`. Generator creates config/importron/$name.rb file.

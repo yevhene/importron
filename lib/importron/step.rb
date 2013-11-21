@@ -9,8 +9,9 @@ module Importron
     end
 
     def do(databases, run_options = {})
-      puts "Exporting table '#{@from}' from database '#{@database.to_s}'."
       db = databases[@database]
+      count = db["SELECT count(*) FROM #{@from}"].first['count(*)'.to_sym]
+      puts "Exporting table '#{@from}' from database '#{@database.to_s}'. (#{count})"
 
       if run_options[:debug]
         query = "SELECT * FROM #{@from} LIMIT 10"

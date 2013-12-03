@@ -29,13 +29,13 @@ module Importron
       @before << Command.new(options, &block)
     end
 
-    def import(from, options = {}, &block)
+    def import(from, entity, options = {}, &block)
       database = :default
       if from.kind_of? Array
         database = from.first
         from = from.last
       end
-      @process << Step.new(database, from, options, &block)
+      @process << Step.new(database, from, entity, options, &block)
     end
 
     def after(options = {}, &block)

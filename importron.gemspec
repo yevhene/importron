@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency "sequel", "~> 4.4"
+  s.add_dependency "activerecord-import", "~> 0.4.1"
 
   s.add_development_dependency "rspec", "~> 2.14"
 end

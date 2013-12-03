@@ -1,11 +1,18 @@
 module Importron
   class Step
 
-    def initialize(database, from, options = {}, &block)
+    def initialize(database, from, entity, options = {}, &block)
       @database = database
       @from = from
+      @entity = entity
       @options = options
       @block = block
+    end
+
+    CHUNK_SIZE = 1000
+
+    def import(data)
+      @entity.import data, :validate => false
     end
 
     def do(databases, run_options = {})
@@ -19,9 +26,18 @@ module Importron
         query = @from
       end
 
+      data = []
       db[query].each do |row|
-        @block.call row, db
+        item = @block.call(row, db)
+        data << item if item
+        if data.length >= CHUNK_SIZE
+          import data
+          data = []
+          print '*'
+        end
       end
+      import data
+      puts '#'
     end
   end
 end
